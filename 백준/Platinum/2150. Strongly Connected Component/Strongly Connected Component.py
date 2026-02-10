@@ -1,12 +1,11 @@
 import sys
-sys.setrecursionlimit(10**6)
+sys.setrecursionlimit(10**5)
 
 V, E = map(int, input().split())
 G = [[] for _ in range(V+1)]
 for _ in range(E):
     a, b = map(int, input().split())
     G[a] += [b]
-
 
 visited_order = [0] * (V+1) #방문순서
 low = [0] * (V+1) #사이클
@@ -43,4 +42,4 @@ for i in range(1, V+1):
 print(len(answers))
 answers.sort()
 for elem in answers:
-    print(' '.join(map(str, elem)),'-1')
+    print(*elem,'-1')
