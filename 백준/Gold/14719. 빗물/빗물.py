@@ -6,30 +6,34 @@ LeftWallIdx = 0
 water = 0
 if ga==1: print(0);exit(0)
 RightWall = blocks[1]
-RightWallIdx = 1
+RightWallIdx = 1 #왼벽 다음으로 큰 벽의 위치
 i = 0
 while i < ga:
     i += 1
     if i == ga: break
     Wall = blocks[i]
 
-    if RightWall <= Wall:
+    if RightWall <= Wall: #오른쪽 벽 정보 업데이트
         RightWall = Wall
         RightWallIdx = i
 
+    # 왼벽보다 높거나 같다면 고인 물을 계산한다.
     if LeftWall <= RightWall and LeftWallIdx < RightWallIdx:
         H = min(LeftWall, RightWall)
         for j in range(LeftWallIdx+1, RightWallIdx):
             water += H - blocks[j]
 
-        LeftWall = RightWall
-        LeftWallIdx = RightWallIdx
+        LeftWall = RightWall #왼벽높이 업데이트
+        LeftWallIdx = RightWallIdx #왼벽높이인덱스 업데이트
         if i != ga-1:
             RightWall = blocks[i+1]
             RightWallIdx = i+1
-        continue
+        continue #continue해도 상관없다.
 
-    if i == ga-1:
+
+    if i == ga-1: # 끝에 도달
+        #바로 위 조건문에 걸리지 않았음 >>> block[ga-1]는 왼벽보다 작음
+        # LeftWall - - - RightWall 물 구하기
         H = min(LeftWall, RightWall)
         for j in range(LeftWallIdx + 1, RightWallIdx):
             water += H - blocks[j]
@@ -39,5 +43,6 @@ while i < ga:
         LeftWall, RightWall = RightWall, blocks[RightWallIdx]
 
         i = RightWallIdx
+
 
 print(water)
