@@ -1,18 +1,15 @@
-N = int(input())
-tops = list(map(int, input().split()))
-
-stack = []
-ans = [0] * N
-
-for i in range(N-1, -1, -1):
-    height = tops[i]
-    
-    if not stack or tops[stack[-1]] > height:
-        stack.append(i)
-        continue
-
-    while stack and tops[stack[-1]] <= height:
-        ans[stack.pop()] = i+1
-    stack.append(i)
-
-print(' '.join(map(str, ans)))
+n = int(input())
+stack = list(map(int, input().split()))
+sub = []
+ans = [0] * (n)
+while stack:
+    while sub:
+        k, i = sub.pop()
+        if k <= stack[-1]:
+            # 좌표 정답 처리
+            ans[i+1] = len(stack)
+        else:
+            sub.append((k, i))
+            break
+    sub.append((stack.pop(), len(stack)-1))
+print(*ans)
