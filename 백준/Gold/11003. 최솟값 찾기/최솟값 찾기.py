@@ -1,23 +1,22 @@
 from collections import deque
 
-n, l = map(int, input().split())
-A = list(map(int, input().split()))
+q = deque()
 
-dq = deque() # val, index
-ans = []
+n, l = map(int, input().split())
+seq = list(map(int, input().split()))
+D = [0] * n
 
 for i in range(n):
-    a = A[i]
+    # 가장 왼쪽에 있는 노드에 저장된 idx 정보 검사
+    if q and q[0][1] < i-l+1:
+        q.popleft()
 
-    # 값이 a 보다 크다면 모두 제거
-    while dq and dq[-1][0] > a:
-        dq.pop()
-
-    # 값이 범위 l 바깥이면 제거
-    while dq and dq[0][1] < i-l+1:
-        dq.popleft()
-
-    dq.append((a, i))
-    ans.append(dq[0][0])
+    v = seq[i]
+    # 가장 오른쪽에 있는 도드에 저장된 val 정보 검사
+    while q and q[-1][0] >= v:
+        q.pop()
+       
+    q.append((v,i))
+    D[i] = q[0][0]
     
-print(*ans)
+print(*D)
